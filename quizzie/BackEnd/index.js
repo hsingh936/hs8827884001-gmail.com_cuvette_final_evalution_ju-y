@@ -31,7 +31,7 @@ connection.once('open', () => {
 });
 
 app.get('/', (req, res) => {
-    res.send('Welcome');
+    res.send('Welcome to Quiz API');
 });
 
 app.use('/auth', authRoutes);
