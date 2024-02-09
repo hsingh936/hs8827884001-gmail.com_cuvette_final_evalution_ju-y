@@ -22,7 +22,7 @@ const QAQuizContentPage = ({ quiz }) => {
 
       try {
        
-        await axios.post('https://apiquiz.vercel.app/quiz/submit-responses', {
+        await axios.post('https://quizapi-f5wf.onrender.com/quiz/submit-responses', {
           quizId: quiz._id,
           userResponses,
         });
