@@ -2,6 +2,8 @@ const express = require('express');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 const cors = require('cors');
+const authRoutes = require('../BackEnd/routes/auth');
+const quizRoutes = require('../BackEnd/routes/quiz');
 
 require('dotenv').config();
 
@@ -10,15 +12,11 @@ const app = express();
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
-// Define your routes before the CORS middleware
-const authRoutes = require('../BackEnd/routes/auth');
-const quizRoutes = require('../BackEnd/routes/quiz');
-app.use('/auth', authRoutes);
-app.use('/quiz', quizRoutes);
 
-// Apply the CORS middleware
+
+
 app.use(cors({
-  origin: '*', 
+  origin: 'https://mernquizzieapp.vercel.app', 
   methods: ["POST", "GET","DELETE","PUT"],
   credentials: true
 }));
@@ -35,6 +33,9 @@ connection.once('open', () => {
 app.get('/', (req, res) => {
     res.send('Welcome');
 });
+
+app.use('/auth', authRoutes);
+app.use('/quiz', quizRoutes);
 
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {
