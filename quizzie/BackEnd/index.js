@@ -17,7 +17,11 @@ app.use('/auth', authRoutes);
 app.use('/quiz', quizRoutes);
 
 // Apply the CORS middleware
-app.use(cors());
+app.use(cors({
+  origin: 'https://mernquizzie.vercel.app', 
+  methods: ["POST", "GET","DELETE","PUT"],
+  credentials: true
+}));
 
 mongoose.connect(process.env.MONGODB_URL, { useNewUrlParser: true, useUnifiedTopology: true })
     .then(() => console.log('MongoDB connected successfully'))
