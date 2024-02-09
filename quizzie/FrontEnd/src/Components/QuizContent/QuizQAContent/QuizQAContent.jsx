@@ -14,15 +14,15 @@ const QAQuizContentPage = ({ quiz }) => {
     if (!quizSubmitted) {
       setQuizSubmitted(true);
 
-      // Prepare user responses data
+      
       const userResponses = quiz.questions.map((question, index) => ({
         questionId: question._id,
         isCorrect: selectedOption === index && question.options[index].isCorrect,
       }));
 
       try {
-        // Send user responses to the server
-        await axios.post('https://quizzieapi.vercel.app/quiz/submit-responses', {
+       
+        await axios.post('https://quizapi-nine.vercel.app/quiz/submit-responses', {
           quizId: quiz._id,
           userResponses,
         });
@@ -43,7 +43,7 @@ const QAQuizContentPage = ({ quiz }) => {
     const currentQuestion = quiz.questions[currentQuestionIndex];
 
     if (currentQuestion?.timerType === 'OFF') {
-      // Handle the case when the timer is off
+      
     } else {
       setCurrentQuestionIndex((prevIndex) => prevIndex + 1);
       setSelectedOption(null);
