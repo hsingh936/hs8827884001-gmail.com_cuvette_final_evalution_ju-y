@@ -19,7 +19,7 @@ const Dashboard = ({ userId }) => {
     const fetchQuizzes = async () => {
       try {
         const authToken = localStorage.getItem('authToken');
-        const response = await axios.get(`https://quizapi-nine.vercel.app/quiz/user/${userId}`, {
+        const response = await axios.get(`https://apiquiz.vercel.app/quiz/user/${userId}`, {
           headers: {
             Authorization: `Bearer ${authToken}`,
           },
