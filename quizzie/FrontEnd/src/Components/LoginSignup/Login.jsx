@@ -8,8 +8,8 @@ export default function Login({ setActivePage, setUserId }) {
     email: '',
     password: '',
   });
-  const [loading, setLoading] = useState(false); // State to track loading
-  const [error, setError] = useState(null); // State to track errors
+  const [loading, setLoading] = useState(false); 
+  const [error, setError] = useState(null); 
 
   const navigate = useNavigate();
 
@@ -19,8 +19,8 @@ export default function Login({ setActivePage, setUserId }) {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setLoading(true); // Start loading
-    setError(null); // Clear any previous errors
+    setLoading(true); 
+    setError(null); 
 
     try {
       const response = await axios.post('https://quizapi-f5wf.onrender.com/auth/login', user);
@@ -44,7 +44,7 @@ export default function Login({ setActivePage, setUserId }) {
         setError('An error occurred, please try again later');
       }
     } finally {
-      setLoading(false); // Stop loading
+      setLoading(false); 
     }
   };
 
