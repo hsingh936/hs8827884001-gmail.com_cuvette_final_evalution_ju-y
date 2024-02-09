@@ -11,7 +11,7 @@ const app = express();
 
 
 app.use(cors({
-  origin: 'https://quizzieapp-ten.vercel.app',
+  origin: '*',
   methods: ["POST", "GET","DELETE","PUT"],
   credentials: true
 }));
