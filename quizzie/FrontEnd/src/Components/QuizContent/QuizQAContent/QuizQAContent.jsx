@@ -22,7 +22,7 @@ const QAQuizContentPage = ({ quiz }) => {
 
       try {
         // Send user responses to the server
-        await axios.post('https://quizapi-five.vercel.app/quiz/submit-responses', {
+        await axios.post('https://quizzieapi.vercel.app/quiz/submit-responses', {
           quizId: quiz._id,
           userResponses,
         });
