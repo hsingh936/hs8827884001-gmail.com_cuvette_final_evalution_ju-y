@@ -25,7 +25,7 @@ const AnalyticsPage = ({ userId }) => {
   const fetchQuizzes = useCallback(async () => {
     try {
       const authToken = localStorage.getItem('authToken');
-      const response = await axios.get(`https://quizapi-five.vercel.app/quiz/user/${userId}`, {
+      const response = await axios.get(`https://quizzieapi.vercel.app/quiz/user/${userId}`, {
         headers: {
           Authorization: `Bearer ${authToken}`,
         },
