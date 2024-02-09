@@ -2,7 +2,6 @@ const express = require('express');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 const cors = require('cors');
-
 require('dotenv').config();
 
 const app = express();
@@ -33,9 +32,9 @@ app.get('/', (req, res) => {
   res.send('Welcome');
 });
 
-
+// Set CORS headers for all responses
 app.use((req, res, next) => {
-  res.header('Access-Control-Allow-Origin', 'https://quizzieapp-ten.vercel.app/'); 
+  res.header('Access-Control-Allow-Origin', 'https://quizzieapp-ten.vercel.app');
   res.header(
     'Access-Control-Allow-Headers',
     'Origin, X-Requested-With, Content-Type, Accept'
