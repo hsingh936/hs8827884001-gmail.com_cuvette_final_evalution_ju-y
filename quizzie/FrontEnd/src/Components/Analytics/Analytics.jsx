@@ -25,7 +25,7 @@ const AnalyticsPage = ({ userId }) => {
   const fetchQuizzes = useCallback(async () => {
     try {
       const authToken = localStorage.getItem('authToken');
-      const response = await axios.get(`https://quizzieapi.vercel.app/quiz/user/${userId}`, {
+      const response = await axios.get(`https://quizapi-nine.vercel.app/quiz/user/${userId}`, {
         headers: {
           Authorization: `Bearer ${authToken}`,
         },
@@ -54,7 +54,7 @@ const AnalyticsPage = ({ userId }) => {
   const handleConfirmDelete = async () => {
     try {
       const authToken = localStorage.getItem('authToken');
-      await axios.delete(`https://quizzieapi.vercel.app/quiz/${quizToDelete}`, {
+      await axios.delete(`https://quizapi-nine.vercel.app/quiz/${quizToDelete}`, {
         headers: {
           Authorization: `Bearer ${authToken}`,
         },
