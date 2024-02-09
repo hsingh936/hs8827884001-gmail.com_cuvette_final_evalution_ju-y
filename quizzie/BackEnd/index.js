@@ -18,7 +18,7 @@ app.use('/quiz', quizRoutes);
 
 // Apply the CORS middleware
 app.use(cors({
-  origin: 'https://mernquizzie.vercel.app', 
+  origin: '*', 
   methods: ["POST", "GET","DELETE","PUT"],
   credentials: true
 }));
