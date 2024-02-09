@@ -10,13 +10,11 @@ require('dotenv').config();
 const app = express();
 
 
-app.use(cors(
-  {
-    origin: ["https://quizzieapp-ten.vercel.app"],
-    methods: ["POST", "GET","DELETE","PUT"],
-    credentials: true
-  }
-));
+app.use(cors({
+  origin: '*',
+  methods: ["POST", "GET","DELETE","PUT"],
+  credentials: true
+}));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true })); 
 
