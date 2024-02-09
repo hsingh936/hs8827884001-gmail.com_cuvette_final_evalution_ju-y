@@ -39,7 +39,7 @@ const PollQuizContentPage = ({ quiz }) => {
         count: selectedOptionCounts[index],
       }));
 
-      const response = await axios.post('https://quizapi-nine.vercel.app/quiz/submit-responses', {
+      const response = await axios.post('https://apiquiz.vercel.app/quiz/submit-responses', {
         quizId: quiz._id,
         userResponses,
       });
