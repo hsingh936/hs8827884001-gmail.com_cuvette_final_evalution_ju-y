@@ -21,6 +21,7 @@ export default function Signup({ setActivePage }) {
   const [emailError, setEmailError] = useState('');
   const [passwordError, setPasswordError] = useState('');
   const [confirmPasswordError, setConfirmPasswordError] = useState('');
+  const [loading, setLoading] = useState(false);
 
   const handleChange = (e) => {
     setUser({ ...user, [e.target.name]: e.target.value });
@@ -60,21 +61,20 @@ export default function Signup({ setActivePage }) {
 
     if (valid) {
       try {
+        setLoading(true); 
         
         const response = await axios.post('https://quizapi-f5wf.onrender.com/auth/Signup', user);
-
         
         console.log('Signup successful:', response.data);
 
-        
         navigate('/login');
 
-        
         setUser({ name: '', email: '', password: '', confirmPassword: '' });
       } catch (error) {
-       
         console.error('Error during registration:', error);
         console.log('Axios response:', error.response);
+      } finally {
+        setLoading(false); 
       }
     }
   };
@@ -87,7 +87,7 @@ export default function Signup({ setActivePage }) {
     <div className={styles.container}>
       <div className={styles.header}>QUIZZIE</div>
       <div className={styles.button}>
-        <button className={styles.signupbtn1}>Sign Up</button>
+        <button className={styles.signupbtn1} disabled={loading}>Sign Up</button>
         <button className={styles.loginbtn1} onClick={handleLoginClick}> Log In</button>
       </div>
       <div className={`${styles.inputContainer} ${nameError ? styles.error : ''}`}>
@@ -142,8 +142,8 @@ export default function Signup({ setActivePage }) {
         </label>
       </div>
 
-      <button className={styles.signupbtn2} onClick={handleSubmit}>
-        Sign-Up
+      <button className={styles.signupbtn2} onClick={handleSubmit} disabled={loading}>
+        {loading ? 'Loading...' : 'Sign-Up'}
       </button>
     </div>
   );
