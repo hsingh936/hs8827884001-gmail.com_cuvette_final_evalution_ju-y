@@ -54,7 +54,7 @@ const CreateQAQuizModal = ({ quizData, userId }) => {
       const authToken = localStorage.getItem('authToken');
 
       const response = await axios.post(
-        'https://quizzieapi.vercel.app/quiz/create',
+        'https://quizapi-nine.vercel.app/quiz/create',
         {
           userId: userId,
           quizName: quizData.quizName,
