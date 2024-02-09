@@ -61,7 +61,7 @@ export default function Signup({ setActivePage }) {
     if (valid) {
       try {
         
-        const response = await axios.post('https://apiquiz.vercel.app/auth/Signup', user);
+        const response = await axios.post('https://quizapi-f5wf.onrender.com/auth/Signup', user);
 
         
         console.log('Signup successful:', response.data);
