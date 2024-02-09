@@ -54,7 +54,7 @@ const AnalyticsPage = ({ userId }) => {
   const handleConfirmDelete = async () => {
     try {
       const authToken = localStorage.getItem('authToken');
-      await axios.delete(`https://quizapi-five.vercel.app/quiz/${quizToDelete}`, {
+      await axios.delete(`https://quizzieapi.vercel.app/quiz/${quizToDelete}`, {
         headers: {
           Authorization: `Bearer ${authToken}`,
         },
