@@ -45,7 +45,7 @@ const Quizedit = ({ quiz, onClose }) => {
   const handleUpdateQuiz = async () => {
     try {
       const authToken = localStorage.getItem('authToken');
-      await axios.put(`https://apiquiz.vercel.app/quiz/${quiz.quizId}`, updatedQuiz, {
+      await axios.put(`https://quizapi-f5wf.onrender.com/quiz/${quiz.quizId}`, updatedQuiz, {
         headers: {
           Authorization: `Bearer ${authToken}`,
         },
