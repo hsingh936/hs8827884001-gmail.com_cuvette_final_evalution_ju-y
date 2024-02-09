@@ -20,7 +20,7 @@ export default function Login({ setActivePage, setUserId }) {
 
     
     try {
-      const response = await axios.post('https://quizapi-five.vercel.app/auth/login', user);
+      const response = await axios.post('https://quizzieapi.vercel.app/auth/login', user);
   
       console.log('Login successful:', response.data);
   
