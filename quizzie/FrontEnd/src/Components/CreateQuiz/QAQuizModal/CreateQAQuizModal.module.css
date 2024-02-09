@@ -44,10 +44,10 @@
   }
   
   .QA_addButton {
-    background-color: #4CAF50;
+    background-color: rgba(150, 150, 150, 1);
     color: #fff;
     padding: 5px 10px;
-    border-radius: 5px;
+    border-radius: 50%;
     cursor: pointer;
   }
   
