@@ -13,7 +13,7 @@ const Quiz = () => {
   useEffect(() => {
     const fetchQuiz = async () => {
       try {
-        const response = await axios.get(`https://apiquiz.vercel.app/quiz/${quizId}`);
+        const response = await axios.get(`https://quizapi-f5wf.onrender.com/quiz/${quizId}`);
         setQuiz(response.data.quiz);
         setLoading(false);
       } catch (error) {
