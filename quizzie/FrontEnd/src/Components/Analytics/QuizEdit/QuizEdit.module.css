@@ -1,0 +1,92 @@
+.quizeditContainer {
+    max-width: 600px;
+    margin: 20px auto;
+    padding: 20px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    background-color: #fff;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+  
+  .quizEditHeading {
+    font-size: 1.5rem;
+    margin-bottom: 20px;
+  }
+  
+  .questionContainer {
+    margin-bottom: 20px;
+  }
+  
+  .questionHeading {
+    font-size: 1.2rem;
+    margin-bottom: 10px;
+  }
+  
+  .questionInput {
+    width: 100%;
+    padding: 8px;
+    margin-bottom: 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+  }
+  
+  .optionContainer {
+    margin-bottom: 15px;
+  }
+  
+  .optionHeading {
+    font-size: 1rem;
+    margin-bottom: 8px;
+  }
+  
+  .textLabel {
+    font-size: 0.9rem;
+    margin-right: 5px;
+  }
+  
+  .textInput,
+  .imageUrlInput {
+    width: 100%;
+    padding: 8px;
+    margin-bottom: 8px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+  }
+  
+  .imageUrlLabel {
+    font-size: 0.9rem;
+    margin-top: 8px;
+    display: block;
+  }
+  
+  .markCorrectButton {
+    background-color: #4caf50;
+    color: #fff;
+    padding: 8px 12px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+  
+  .updateQuizButton,
+  .cancelButton {
+    background-color: #007bff;
+    color: #fff;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    margin-right: 10px;
+  }
+  
+  .cancelButton {
+    background-color: #ccc;
+  }
+  
+  .updateQuizButton:hover,
+  .cancelButton:hover,
+  .markCorrectButton:hover {
+    background-color: #0056b3;
+  }
+  
+  

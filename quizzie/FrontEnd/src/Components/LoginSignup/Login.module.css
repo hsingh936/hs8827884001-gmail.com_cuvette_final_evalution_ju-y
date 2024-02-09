@@ -1,0 +1,91 @@
+
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,300&family=Inter:wght@200&family=Jomhuria&family=Poppins:wght@300&family=Roboto&family=Single+Day&family=Space+Grotesk:wght@500&display=swap');
+
+.container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  margin: auto;
+  margin-top: 50px;
+  padding-bottom: 30px;
+}
+
+.header {
+  font-family: 'Jomhuria', serif;
+  font-size: 100px;
+  line-height: 100px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.button {
+  display: flex;
+  gap: 200px;
+  margin: 60px auto;
+}
+
+.signupbtn1 {
+  width: 217px;
+  height: 37px;
+  font-family: 'Poppins', sans-serif;
+  background-color: rgba(255, 255, 255, 1);
+  border: none;
+  cursor: pointer;
+}
+
+.loginbtn1 {
+  width: 60px;
+  height: 30px;
+  font-family: 'Poppins', sans-serif;
+  box-shadow: 0 0 10px rgba(169, 188, 255, 1); 
+  border: none;
+  cursor: pointer;
+}
+
+
+
+.details {
+  display: flex;
+  flex-direction: column;
+  font-family: 'Poppins', sans-serif;
+  margin: 50px;
+  gap: 25px;
+  align-items: center;
+}
+
+.loginbtn2 {
+  display: flex;
+  justify-content: center;
+  text-align: center;
+  width: 274px;
+  margin: 5px auto;
+  font-family: 'Poppins', sans-serif;
+  background-color: rgba(169, 188, 255, 1);
+  border-radius: 50px;
+  border: none;
+  cursor: pointer;
+}
+
+.inputContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+label {
+  font-family: 'Poppins', sans-serif;
+  display: block;
+  margin-bottom: 8px;
+  margin-right: 10px;
+}
+
+input {
+  width: 388px;
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 10px 10px 0 0;
+  box-sizing: border-box;
+}
+
+

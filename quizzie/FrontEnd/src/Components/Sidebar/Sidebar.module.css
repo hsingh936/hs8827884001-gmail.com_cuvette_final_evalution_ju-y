@@ -1,0 +1,73 @@
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,300&family=Inter:wght@200&family=Jomhuria&family=Poppins:wght@300&family=Roboto&family=Single+Day&family=Space+Grotesk:wght@500&display=swap');
+
+.mainContainer {
+    display: flex;
+    height: 100vh;
+  }
+
+  .sidebar {
+    background-color: rgba(255, 255, 255, 1);
+    box-sizing: border-box;
+    width: 193px;
+    height: 832px;
+  }
+  
+  
+  .dashLogo {
+    color: #474444;
+    cursor: pointer;
+    font-family: Jomhuria,sans-serif;
+    font-size: 5rem;
+    font-style: normal;
+    font-weight: 550;
+    line-height: normal;
+    text-align: center;
+}
+  
+  .Sidebarbths {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+    margin-top: 10rem;
+    width: -webkit-fill-available;
+     
+  }
+  
+  .dashBtn,
+  .analBtn,
+  .createBtn {
+    background: #fff;
+    border: none;
+    border-radius: 0.625rem;
+    cursor: pointer;
+    font-family: 'Poppins', sans-serif;
+    font-weight: 550;
+    padding: 12px;  
+  }
+
+  .dashBtn:hover {
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+  }
+
+  .analBtn:hover {
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+  }
+
+  .createBtn:hover {
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+  }
+
+
+  .logoutbtn {
+    background-color: #fff;
+    margin-top: 15rem;
+    margin-left: 2.5rem;
+    font-family: 'Poppins', sans-serif;
+    border: none;
+    cursor: pointer;
+    font-weight: 550;
+  }
+
+  .logoutbtn:hover {
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+  }

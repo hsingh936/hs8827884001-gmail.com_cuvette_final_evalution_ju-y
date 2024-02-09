@@ -1,0 +1,24 @@
+.closeButton {
+  cursor: pointer;
+  background-color: transparent;
+  border: none;
+  font-size: 18px;
+  color: #333;
+}
+
+.closeButton:hover {
+  color: red;
+}
+
+.centerButtonContainer {
+  display: flex;
+  justify-content: center;
+}
+
+.shareButton {
+  font-size: larger;
+  background-color: rgba(96, 184, 75, 1);
+  color: white;
+  border: none;
+  border-radius: 0.5rem;
+}

@@ -1,0 +1,72 @@
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,300&family=Inter:wght@200&family=Jomhuria&family=Poppins:wght@300&family=Roboto&family=Single+Day&family=Space+Grotesk:wght@500&display=swap');
+
+.modalOverlay {
+  align-items: center;
+  background-color: rgba(0,0,0,.2);
+  display: flex;
+  height: 100vh;
+  justify-content: center;
+  left: 0;
+  position: fixed;
+  top: 0;
+  width: 100vw;
+  }
+
+  .modal {
+    background-color: #fff;
+    border-radius: 5px;
+    height: 30vh;
+    padding: 2.5rem;
+    width: 30vw;
+  }
+  
+  .modalContent {
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+    font-family: Poppins,sans-serif;
+    
+  }
+
+  p{
+    display: block;
+    margin-block-start: 1em;
+    margin-block-end: 1em;
+    margin-inline-start: 0px;
+    margin-inline-end: 0px;
+    font-size: 1.7rem;
+    font-weight: bold;
+    text-align: center;
+  }
+  
+  .buttonContainer {
+    display: flex;
+    gap: 2rem;
+    justify-content: space-around;
+    margin-top: 1.5rem;
+    width: -webkit-fill-available;
+    font-family: Poppins,sans-serif;
+  }
+
+  .confirm {
+    background: #ff4b4b;
+    border: none;
+    border-radius: 0.5rem;
+    width: auto;
+    color: #fff;
+    cursor: pointer;
+    padding: 0.5rem;
+    transition-duration: .4s;
+  }
+
+  .cancel {
+    background: #fff;
+    border: none;
+    border-radius: 0.625rem;
+    box-shadow: 0 0 15px 0 rgba(0,0,0,.25);
+    width: auto;
+    cursor: pointer;
+    padding: 0.5rem;
+    transition-duration: .4s;
+  }
+  
