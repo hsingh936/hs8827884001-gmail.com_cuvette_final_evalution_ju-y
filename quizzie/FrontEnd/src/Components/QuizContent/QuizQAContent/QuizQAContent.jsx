@@ -70,22 +70,24 @@ const QAQuizContentPage = ({ quiz }) => {
     }
   };
 
-const handleOptionSelect = (optionIndex) => {
-  setSelectedOption(optionIndex);
-
-  const currentQuestion = quiz.questions[currentQuestionIndex];
-  const selectedOptionData = currentQuestion.options[optionIndex];
-
-  if (selectedOptionData.isCorrect) {
-    setCorrectAnswers((prevCorrectAnswers) => prevCorrectAnswers + 1);
-  }
-
-  if (!isLastQuestion) {
-    handleNextQuestion();
-  } else {
-    handleSubmitQuiz();
-  }
-};
+ const handleOptionSelect = (optionIndex) => {
+    setSelectedOption(optionIndex);
+  
+    if (timer === 0) {
+      const currentQuestion = quiz.questions[currentQuestionIndex];
+      const selectedOptionData = currentQuestion.options[optionIndex];
+  
+      if (selectedOptionData.isCorrect) {
+        setCorrectAnswers((prevCorrectAnswers) => prevCorrectAnswers + 1);
+      }
+  
+      if (!isLastQuestion) {
+        handleNextQuestion();
+      } else {
+        handleSubmitQuiz();
+      }
+    }
+  };
 
   if (quiz.questions.length === 0) {
     return <div className={styles.noQuestions}>No questions available</div>;
