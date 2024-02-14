@@ -36,8 +36,18 @@ const Quizedit = ({ quiz, onClose }) => {
 
   const handleMarkAsCorrect = (questionIndex, optionIndex) => {
     setUpdatedQuiz((prevQuiz) => {
-      const updatedQuestions = [...prevQuiz.questions];
-      updatedQuestions[questionIndex].correctOption = optionIndex;
+      const updatedQuestions = prevQuiz.questions.map((question, index) => {
+        if (index === questionIndex) {
+          return {
+            ...question,
+            options: question.options.map((option, idx) => ({
+              ...option, 
+              correct: idx === optionIndex,
+            })),
+          };
+        }
+        return question;
+      });
       return { ...prevQuiz, questions: updatedQuestions };
     });
   };
