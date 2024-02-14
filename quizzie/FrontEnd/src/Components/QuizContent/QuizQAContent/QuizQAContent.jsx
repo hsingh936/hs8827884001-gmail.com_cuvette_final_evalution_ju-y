@@ -73,19 +73,17 @@ const QAQuizContentPage = ({ quiz }) => {
 const handleOptionSelect = (optionIndex) => {
   setSelectedOption(optionIndex);
 
-  if (timer === 0) {
-    const currentQuestion = quiz.questions[currentQuestionIndex];
-    const selectedOptionData = currentQuestion.options[optionIndex];
+  const currentQuestion = quiz.questions[currentQuestionIndex];
+  const selectedOptionData = currentQuestion.options[optionIndex];
 
-    if (selectedOptionData.isCorrect) {
-      setCorrectAnswers((prevCorrectAnswers) => prevCorrectAnswers + 1);
-    }
+  if (selectedOptionData.isCorrect) {
+    setCorrectAnswers((prevCorrectAnswers) => prevCorrectAnswers + 1);
+  }
 
-    if (!isLastQuestion) {
-      handleNextQuestion();
-    } else {
-      handleSubmitQuiz();
-    }
+  if (!isLastQuestion) {
+    handleNextQuestion();
+  } else {
+    handleSubmitQuiz();
   }
 };
 
