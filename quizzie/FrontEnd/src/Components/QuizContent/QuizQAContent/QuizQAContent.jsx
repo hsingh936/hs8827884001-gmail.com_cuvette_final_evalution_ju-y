@@ -14,21 +14,23 @@ const QAQuizContentPage = ({ quiz }) => {
     setTimer(getCurrentQuestionTimer());
   }, [currentQuestionIndex, quiz]);
 
-  const getCurrentQuestionTimer = useCallback(() => {
-    const currentQuestion = quiz.questions[currentQuestionIndex];
-    return currentQuestion ? getTimerValue(currentQuestion.timerType) : 0;
-  }, [currentQuestionIndex, quiz]);
-
   useEffect(() => {
     const timerValue = getCurrentQuestionTimer();
-    if (timerValue > 0) {
+    if (timerValue !== null && timerValue > 0) {
       const timerInterval = setInterval(() => {
         setTimer((prevTimer) => prevTimer - 1);
       }, 1000);
 
       return () => clearInterval(timerInterval);
+    } else if (timerValue === 0 && isLastQuestion()) {
+      handleSubmitQuiz();
     }
-  }, [getCurrentQuestionTimer]);
+  }, [getCurrentQuestionTimer, currentQuestionIndex, quiz]);
+
+  const getCurrentQuestionTimer = useCallback(() => {
+    const currentQuestion = quiz.questions[currentQuestionIndex];
+    return currentQuestion ? getTimerValue(currentQuestion.timerType) : null;
+  }, [currentQuestionIndex, quiz]);
 
   const getTimerValue = (timerType) => {
     switch (timerType) {
