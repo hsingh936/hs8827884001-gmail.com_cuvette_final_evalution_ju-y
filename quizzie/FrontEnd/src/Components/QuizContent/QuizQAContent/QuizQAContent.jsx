@@ -9,28 +9,53 @@ const QAQuizContentPage = ({ quiz }) => {
   const [timer, setTimer] = useState(0);
   const [correctAnswers, setCorrectAnswers] = useState(0);
   const [quizSubmitted, setQuizSubmitted] = useState(false);
-  
-  useEffect(() => {
-    setTimer(getCurrentQuestionTimer());
-  }, [currentQuestionIndex, quiz]);
 
-  useEffect(() => {
-    const timerValue = getCurrentQuestionTimer();
-    if (timerValue !== null && timerValue > 0) {
-      const timerInterval = setInterval(() => {
-        setTimer((prevTimer) => prevTimer - 1);
-      }, 1000);
+  const handleSubmitQuiz = useCallback(async () => {
+    if (!quizSubmitted) {
+      setQuizSubmitted(true);
 
-      return () => clearInterval(timerInterval);
-    } else if (timerValue === 0 && isLastQuestion()) {
-      handleSubmitQuiz();
+      // Prepare user responses data
+      const userResponses = quiz.questions.map((question, index) => ({
+        questionId: question._id,
+        isCorrect: selectedOption === index && question.options[index].isCorrect,
+      }));
+
+      try {
+        // Send user responses to the server
+        await axios.post('https://quizapi-f5wf.onrender.com/quiz/submit-responses', {
+          quizId: quiz._id,
+          userResponses,
+        });
+
+        console.log('User responses submitted successfully.');
+      } catch (error) {
+        console.error('Error submitting user responses:', error);
+      }
     }
-  }, [getCurrentQuestionTimer, currentQuestionIndex, quiz]);
+  }, [quiz, quizSubmitted, selectedOption]);
 
   const getCurrentQuestionTimer = useCallback(() => {
     const currentQuestion = quiz.questions[currentQuestionIndex];
-    return currentQuestion ? getTimerValue(currentQuestion.timerType) : null;
+    return currentQuestion ? getTimerValue(currentQuestion.timerType) : 0;
   }, [currentQuestionIndex, quiz]);
+
+  const handleNextQuestion = useCallback(() => {
+    const currentQuestion = quiz.questions[currentQuestionIndex];
+
+    if (currentQuestion?.timerType === 'OFF') {
+      // Handle the case when the timer is off
+    } else {
+      setCurrentQuestionIndex((prevIndex) => prevIndex + 1);
+      setSelectedOption(null);
+      setTimer(getCurrentQuestionTimer());
+    }
+  }, [getCurrentQuestionTimer, currentQuestionIndex, quiz]);
+
+  const isLastQuestion = currentQuestionIndex === quiz.questions.length - 1;
+
+  useEffect(() => {
+    setTimer(getCurrentQuestionTimer());
+  }, [getCurrentQuestionTimer]);
 
   const getTimerValue = (timerType) => {
     switch (timerType) {
@@ -45,51 +70,25 @@ const QAQuizContentPage = ({ quiz }) => {
     }
   };
 
-  const handleNextQuestion = useCallback(() => {
-    setCurrentQuestionIndex((prevIndex) => prevIndex + 1);
-    setSelectedOption(null);
-    setTimer(getCurrentQuestionTimer());
-  }, [getCurrentQuestionTimer]);
-
-  const handleOptionSelect = (option) => {
-    setSelectedOption(option);
-
-    const currentQuestion = quiz.questions[currentQuestionIndex];
-
-    if (option.isCorrect) {
-      setCorrectAnswers((prevCorrectAnswers) => prevCorrectAnswers + 1);
-    }
-
-    if (!isLastQuestion()) {
-      handleNextQuestion();
-    }
-  };
-
-  const isLastQuestion = () => {
-    return currentQuestionIndex === quiz.questions.length - 1;
-  };
-
-  const handleSubmitQuiz = async () => {
-    if (!quizSubmitted) {
-      setQuizSubmitted(true);
-
-      const userResponses = quiz.questions.map((question, index) => ({
-        questionId: question._id,
-        isCorrect: selectedOption === question.options[index] && question.options[index].isCorrect,
-      }));
-
-      try {
-        await axios.post('https://quizapi-f5wf.onrender.com/quiz/submit-responses', {
-          quizId: quiz._id,
-          userResponses,
-        });
-
-        console.log('User responses submitted successfully.');
-      } catch (error) {
-        console.error('Error submitting user responses:', error);
+  const handleOptionSelect = (optionIndex) => {
+    setSelectedOption(optionIndex);
+  
+    if (timer === 0) {
+      const currentQuestion = quiz.questions[currentQuestionIndex];
+      const selectedOptionData = currentQuestion.options[optionIndex];
+  
+      if (selectedOptionData.isCorrect) {
+        setCorrectAnswers((prevCorrectAnswers) => prevCorrectAnswers + 1);
+      }
+  
+      if (!isLastQuestion) {
+        handleNextQuestion();
+      } else {
+        handleSubmitQuiz();
       }
     }
   };
+  
 
   if (quiz.questions.length === 0) {
     return <div className={styles.noQuestions}>No questions available</div>;
@@ -124,16 +123,16 @@ const QAQuizContentPage = ({ quiz }) => {
             {currentQuestion?.options.map((option, index) => (
               <button
                 key={index}
-                onClick={() => handleOptionSelect(option)}
-                className={`${styles.optionButton} ${selectedOption === option ? styles.selectedOption : ''}`}
-                style={{ border: selectedOption === option ? '2px solid blue' : '2px solid #ddd' }}
+                onClick={() => handleOptionSelect(index)}
+                className={`${styles.optionButton} ${selectedOption === index ? styles.selectedOption : ''}`}
+                style={{ border: selectedOption === index ? '2px solid blue' : '2px solid #ddd' }}
               >
                 {option?.text}
               </button>
             ))}
           </div>
         </div>
-        {isLastQuestion() ? (
+        {isLastQuestion ? (
           <button className={styles.submitButton} onClick={handleSubmitQuiz}>Submit</button>
         ) : (
           <button className={styles.nextButton} onClick={handleNextQuestion}>Next</button>
