@@ -11,16 +11,64 @@ const QAQuizContentPage = ({ quiz }) => {
   const [quizSubmitted, setQuizSubmitted] = useState(false);
 
   useEffect(() => {
-    if (timer > 0) {
+    setTimer(getCurrentQuestionTimer());
+  }, [currentQuestionIndex, quiz]);
+
+  const getCurrentQuestionTimer = useCallback(() => {
+    const currentQuestion = quiz.questions[currentQuestionIndex];
+    return currentQuestion ? getTimerValue(currentQuestion.timerType) : 0;
+  }, [currentQuestionIndex, quiz]);
+
+  useEffect(() => {
+    const timerValue = getCurrentQuestionTimer();
+    if (timerValue > 0) {
       const timerInterval = setInterval(() => {
         setTimer((prevTimer) => prevTimer - 1);
       }, 1000);
 
       return () => clearInterval(timerInterval);
     }
-  }, [timer]);
+  }, [getCurrentQuestionTimer]);
 
-  const handleSubmitQuiz = useCallback(async () => {
+  const getTimerValue = (timerType) => {
+    switch (timerType) {
+      case '5 Sec':
+        return 5;
+      case '10 Sec':
+        return 10;
+      case 'OFF':
+        return null;
+      default:
+        return null;
+    }
+  };
+
+  const handleNextQuestion = useCallback(() => {
+    setCurrentQuestionIndex((prevIndex) => prevIndex + 1);
+    setSelectedOption(null);
+    setTimer(getCurrentQuestionTimer());
+  }, [getCurrentQuestionTimer]);
+
+  const handleOptionSelect = (optionIndex) => {
+    setSelectedOption(optionIndex);
+
+    const currentQuestion = quiz.questions[currentQuestionIndex];
+    const selectedOptionData = currentQuestion.options[optionIndex];
+
+    if (selectedOptionData.isCorrect) {
+      setCorrectAnswers((prevCorrectAnswers) => prevCorrectAnswers + 1);
+    }
+
+    if (!isLastQuestion()) {
+      handleNextQuestion();
+    }
+  };
+
+  const isLastQuestion = () => {
+    return currentQuestionIndex === quiz.questions.length - 1;
+  };
+
+  const handleSubmitQuiz = async () => {
     if (!quizSubmitted) {
       setQuizSubmitted(true);
 
@@ -40,49 +88,6 @@ const QAQuizContentPage = ({ quiz }) => {
         console.error('Error submitting user responses:', error);
       }
     }
-  }, [quiz, quizSubmitted, selectedOption]);
-
-  const handleNextQuestion = useCallback(() => {
-    setCurrentQuestionIndex((prevIndex) => prevIndex + 1);
-    setSelectedOption(null);
-    setTimer(getCurrentQuestionTimer());
-  }, [getCurrentQuestionTimer]);
-
-  const getCurrentQuestionTimer = useCallback(() => {
-    const currentQuestion = quiz.questions[currentQuestionIndex];
-    return currentQuestion ? getTimerValue(currentQuestion.timerType) : 0;
-  }, [currentQuestionIndex, quiz]);
-
-  const getTimerValue = (timerType) => {
-    switch (timerType) {
-      case '5 Sec':
-        return 5;
-      case '10 Sec':
-        return 10;
-      case 'OFF':
-        return null;
-      default:
-        return null;
-    }
-  };
-
-  const handleOptionSelect = (optionIndex) => {
-    setSelectedOption(optionIndex);
-
-    const currentQuestion = quiz.questions[currentQuestionIndex];
-    const selectedOptionData = currentQuestion.options[optionIndex];
-
-    if (selectedOptionData.isCorrect) {
-      setCorrectAnswers((prevCorrectAnswers) => prevCorrectAnswers + 1);
-    }
-
-    if (!isLastQuestion()) {
-      handleNextQuestion();
-    }
-  };
-
-  const isLastQuestion = () => {
-    return currentQuestionIndex === quiz.questions.length - 1;
   };
 
   if (quiz.questions.length === 0) {
