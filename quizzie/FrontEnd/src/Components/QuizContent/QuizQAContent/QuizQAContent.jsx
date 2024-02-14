@@ -39,6 +39,26 @@ const QAQuizContentPage = ({ quiz }) => {
     return currentQuestion ? getTimerValue(currentQuestion.timerType) : 0;
   }, [currentQuestionIndex, quiz]);
 
+    const decrementTimer = useCallback(() => {
+    if (timer > 0) {
+      setTimer((prevTimer) => prevTimer - 1);
+    } else {
+      handleNextQuestion(); // Advance to next question if time runs out
+    }
+  }, [handleNextQuestion, timer]);
+
+  const handleNextQuestion = useCallback(() => {
+    const currentQuestion = quiz.questions[currentQuestionIndex];
+
+    if (currentQuestion?.timerType === 'OFF') {
+      // ... (handle questions without timer)
+    } else {
+      setCurrentQuestionIndex((prevIndex) => prevIndex + 1);
+      setSelectedOption(null);
+      setTimer(getCurrentQuestionTimer());
+    }
+  }, [getCurrentQuestionTimer, quiz]);
+
   const handleNextQuestion = useCallback(() => {
     const currentQuestion = quiz.questions[currentQuestionIndex];
 
@@ -49,9 +69,14 @@ const QAQuizContentPage = ({ quiz }) => {
       setSelectedOption(null);
       setTimer(getCurrentQuestionTimer());
     }
-  }, [getCurrentQuestionTimer, currentQuestionIndex, quiz]);
+  }, [getCurrentQuestionTimer, quiz]);
 
   const isLastQuestion = currentQuestionIndex === quiz.questions.length - 1;
+
+    useEffect(() => {
+    const timerId = setInterval(decrementTimer, 1000); // Decrement timer every second
+    return () => clearInterval(timerId); // Clear interval on unmount
+  }, [decrementTimer]);
 
   useEffect(() => {
     setTimer(getCurrentQuestionTimer());
