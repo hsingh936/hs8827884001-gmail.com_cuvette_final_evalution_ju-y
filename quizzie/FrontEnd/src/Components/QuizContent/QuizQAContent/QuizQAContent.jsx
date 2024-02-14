@@ -138,4 +138,3 @@ const QAQuizContentPage = ({ quiz }) => {
 };
 
 export default QAQuizContentPage;
-
