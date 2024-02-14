@@ -149,7 +149,7 @@ const handleMarkAsCorrect = (questionIndex, optionIndex) => {
               )}
               <button
                 onClick={() => handleMarkAsCorrect(questionIndex, optionIndex)}
-                className={styles.markCorrectButton}
+                className={`${styles.markCorrectButton} ${question.options[optionIndex].correct ? styles.selected : ''}`}
               >
                 Mark as Correct
               </button>
