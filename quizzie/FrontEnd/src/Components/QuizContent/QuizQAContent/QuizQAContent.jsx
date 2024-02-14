@@ -9,7 +9,7 @@ const QAQuizContentPage = ({ quiz }) => {
   const [timer, setTimer] = useState(0);
   const [correctAnswers, setCorrectAnswers] = useState(0);
   const [quizSubmitted, setQuizSubmitted] = useState(false);
-
+  
   useEffect(() => {
     setTimer(getCurrentQuestionTimer());
   }, [currentQuestionIndex, quiz]);
