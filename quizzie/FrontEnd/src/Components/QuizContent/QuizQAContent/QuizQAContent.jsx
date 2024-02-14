@@ -51,13 +51,12 @@ const QAQuizContentPage = ({ quiz }) => {
     setTimer(getCurrentQuestionTimer());
   }, [getCurrentQuestionTimer]);
 
-  const handleOptionSelect = (optionIndex) => {
-    setSelectedOption(optionIndex);
+  const handleOptionSelect = (option) => {
+    setSelectedOption(option);
 
     const currentQuestion = quiz.questions[currentQuestionIndex];
-    const selectedOptionData = currentQuestion.options[optionIndex];
 
-    if (selectedOptionData.isCorrect) {
+    if (option.isCorrect) {
       setCorrectAnswers((prevCorrectAnswers) => prevCorrectAnswers + 1);
     }
 
@@ -76,7 +75,7 @@ const QAQuizContentPage = ({ quiz }) => {
 
       const userResponses = quiz.questions.map((question, index) => ({
         questionId: question._id,
-        isCorrect: selectedOption === index && question.options[index].isCorrect,
+        isCorrect: selectedOption === question.options[index] && question.options[index].isCorrect,
       }));
 
       try {
@@ -122,12 +121,12 @@ const QAQuizContentPage = ({ quiz }) => {
         <div className={styles.questions}>
           <div>{currentQuestion?.text}</div>
           <div className={styles.optionsContainer}>
-            {currentQuestion?.options.map((option, optionIndex) => (
+            {currentQuestion?.options.map((option, index) => (
               <button
-                key={optionIndex}
-                onClick={() => handleOptionSelect(optionIndex)}
-                className={`${styles.optionButton} ${selectedOption === optionIndex ? styles.selectedOption : ''}`}
-                style={{ border: selectedOption === optionIndex ? '2px solid blue' : '2px solid #ddd' }}
+                key={index}
+                onClick={() => handleOptionSelect(option)}
+                className={`${styles.optionButton} ${selectedOption === option ? styles.selectedOption : ''}`}
+                style={{ border: selectedOption === option ? '2px solid blue' : '2px solid #ddd' }}
               >
                 {option?.text}
               </button>
