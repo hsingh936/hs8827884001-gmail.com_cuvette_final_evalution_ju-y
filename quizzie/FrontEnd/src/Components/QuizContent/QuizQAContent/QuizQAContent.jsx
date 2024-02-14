@@ -10,18 +10,26 @@ const QAQuizContentPage = ({ quiz }) => {
   const [correctAnswers, setCorrectAnswers] = useState(0);
   const [quizSubmitted, setQuizSubmitted] = useState(false);
 
+  useEffect(() => {
+    if (timer > 0) {
+      const timerInterval = setInterval(() => {
+        setTimer((prevTimer) => prevTimer - 1);
+      }, 1000);
+
+      return () => clearInterval(timerInterval);
+    }
+  }, [timer]);
+
   const handleSubmitQuiz = useCallback(async () => {
     if (!quizSubmitted) {
       setQuizSubmitted(true);
 
-      
       const userResponses = quiz.questions.map((question, index) => ({
         questionId: question._id,
         isCorrect: selectedOption === index && question.options[index].isCorrect,
       }));
 
       try {
-       
         await axios.post('https://quizapi-f5wf.onrender.com/quiz/submit-responses', {
           quizId: quiz._id,
           userResponses,
@@ -34,53 +42,16 @@ const QAQuizContentPage = ({ quiz }) => {
     }
   }, [quiz, quizSubmitted, selectedOption]);
 
+  const handleNextQuestion = useCallback(() => {
+    setCurrentQuestionIndex((prevIndex) => prevIndex + 1);
+    setSelectedOption(null);
+    setTimer(getCurrentQuestionTimer());
+  }, [getCurrentQuestionTimer]);
+
   const getCurrentQuestionTimer = useCallback(() => {
     const currentQuestion = quiz.questions[currentQuestionIndex];
     return currentQuestion ? getTimerValue(currentQuestion.timerType) : 0;
   }, [currentQuestionIndex, quiz]);
-
-    const decrementTimer = useCallback(() => {
-    if (timer > 0) {
-      setTimer((prevTimer) => prevTimer - 1);
-    } else {
-      handleNextQuestion(); // Advance to next question if time runs out
-    }
-  }, [handleNextQuestion, timer]);
-
-  const handleNextQuestion = useCallback(() => {
-    const currentQuestion = quiz.questions[currentQuestionIndex];
-
-    if (currentQuestion?.timerType === 'OFF') {
-      // ... (handle questions without timer)
-    } else {
-      setCurrentQuestionIndex((prevIndex) => prevIndex + 1);
-      setSelectedOption(null);
-      setTimer(getCurrentQuestionTimer());
-    }
-  }, [getCurrentQuestionTimer, quiz]);
-
-  const handleNextQuestion = useCallback(() => {
-    const currentQuestion = quiz.questions[currentQuestionIndex];
-
-    if (currentQuestion?.timerType === 'OFF') {
-      
-    } else {
-      setCurrentQuestionIndex((prevIndex) => prevIndex + 1);
-      setSelectedOption(null);
-      setTimer(getCurrentQuestionTimer());
-    }
-  }, [getCurrentQuestionTimer, quiz]);
-
-  const isLastQuestion = currentQuestionIndex === quiz.questions.length - 1;
-
-    useEffect(() => {
-    const timerId = setInterval(decrementTimer, 1000); // Decrement timer every second
-    return () => clearInterval(timerId); // Clear interval on unmount
-  }, [decrementTimer]);
-
-  useEffect(() => {
-    setTimer(getCurrentQuestionTimer());
-  }, [getCurrentQuestionTimer]);
 
   const getTimerValue = (timerType) => {
     switch (timerType) {
@@ -95,23 +66,23 @@ const QAQuizContentPage = ({ quiz }) => {
     }
   };
 
- const handleOptionSelect = (optionIndex) => {
+  const handleOptionSelect = (optionIndex) => {
     setSelectedOption(optionIndex);
-  
-    if (timer === 0) {
-      const currentQuestion = quiz.questions[currentQuestionIndex];
-      const selectedOptionData = currentQuestion.options[optionIndex];
-  
-      if (selectedOptionData.isCorrect) {
-        setCorrectAnswers((prevCorrectAnswers) => prevCorrectAnswers + 1);
-      }
-  
-      if (!isLastQuestion) {
-        handleNextQuestion();
-      } else {
-        handleSubmitQuiz();
-      }
+
+    const currentQuestion = quiz.questions[currentQuestionIndex];
+    const selectedOptionData = currentQuestion.options[optionIndex];
+
+    if (selectedOptionData.isCorrect) {
+      setCorrectAnswers((prevCorrectAnswers) => prevCorrectAnswers + 1);
     }
+
+    if (!isLastQuestion()) {
+      handleNextQuestion();
+    }
+  };
+
+  const isLastQuestion = () => {
+    return currentQuestionIndex === quiz.questions.length - 1;
   };
 
   if (quiz.questions.length === 0) {
@@ -156,7 +127,7 @@ const QAQuizContentPage = ({ quiz }) => {
             ))}
           </div>
         </div>
-        {isLastQuestion ? (
+        {isLastQuestion() ? (
           <button className={styles.submitButton} onClick={handleSubmitQuiz}>Submit</button>
         ) : (
           <button className={styles.nextButton} onClick={handleNextQuestion}>Next</button>
@@ -167,3 +138,4 @@ const QAQuizContentPage = ({ quiz }) => {
 };
 
 export default QAQuizContentPage;
+
