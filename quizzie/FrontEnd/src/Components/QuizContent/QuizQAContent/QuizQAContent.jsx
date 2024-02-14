@@ -122,12 +122,12 @@ const QAQuizContentPage = ({ quiz }) => {
         <div className={styles.questions}>
           <div>{currentQuestion?.text}</div>
           <div className={styles.optionsContainer}>
-            {currentQuestion?.options.map((option, index) => (
+            {currentQuestion?.options.map((option, optionIndex) => (
               <button
-                key={index}
-                onClick={() => handleOptionSelect(index)}
-                className={`${styles.optionButton} ${selectedOption === index ? styles.selectedOption : ''}`}
-                style={{ border: selectedOption === index ? '2px solid blue' : '2px solid #ddd' }}
+                key={optionIndex}
+                onClick={() => handleOptionSelect(optionIndex)}
+                className={`${styles.optionButton} ${selectedOption === optionIndex ? styles.selectedOption : ''}`}
+                style={{ border: selectedOption === optionIndex ? '2px solid blue' : '2px solid #ddd' }}
               >
                 {option?.text}
               </button>
